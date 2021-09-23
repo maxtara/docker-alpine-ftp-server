@@ -26,3 +26,28 @@ Environment variables:
 - `user|password foo|bar|/home/foo`
 - `user|password|/home/user/dir|10000`
 - `user|password||10000`
+  
+## docker-compose
+```
+  ftp:
+    container_name: ftp
+    image: maxtara/docker-alpine-ftp-server:latest
+    restart: unless-stopped
+    volumes:
+      - /home/pi/ftp/:/home/user/ftp/:rw
+    ports:
+      - "2121:21"
+      - "21000-21010:21000-21010"
+    environment:
+      - USERS=user|password|/home/user/ftp|1000
+``` 
+  
+## Build
+  
+```
+docker build -t docker-alpine-ftp-server .
+# Deploy
+docker tag docker-alpine-ftp-server maxtara/docker-alpine-ftp-server:latest
+docker push maxtara/docker-alpine-ftp-server
+
+```
